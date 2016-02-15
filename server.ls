@@ -2,8 +2,6 @@
 
 require! [ http, url, querystring, connect, fs, './user.ls', './app.ls', './session.ls' ]
 
-app = connect!
-
 handlers = {}
 
 user-handlers <-! user.get-handlers
@@ -59,7 +57,7 @@ on-request = (request, response) !->
 
 #err, data <-! fs.read-file 'data/session-cookie-keys.txt', encoding: \utf8
 
-app.use on-request
-
-http.create-server(app)
-  .listen(9981)
+connect!
+  ..use on-request
+  http.create-server ..
+    .listen(8080)
