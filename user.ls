@@ -1,4 +1,4 @@
-require! { crypto, './db.ls', './email.ls', './session.ls': sess }
+require! { crypto, './db.ls', './email.ls' }
 
 gen-hex = (bytes, callback) !->
   ex, buf <-! crypto.random-bytes bytes
@@ -75,17 +75,14 @@ handlers =
       callback error: 15
       return
 
-    session-ID <-! gen-hex 32bytes
-    session.id = session-ID
     session.user = docs[0]
-    sess.cache[session-ID] = session
 
-    callback success: true session-ID
+    callback success: true
 
   #########################################################################
 
   whoami: (session, data, callback) !->
-    callback { session.id }
+    callback { session }
 
   #########################################################################
 
@@ -103,8 +100,10 @@ handlers =
   #########################################################################
 
   logout: (session, data, callback) !->
-    if session.id? and session.id of sess.cache
-      delete! sess.cache[session.id]
+    err <-! session.destroy
+    if err?
+      callback { err }
+      return
     callback success: true
 
   #########################################################################

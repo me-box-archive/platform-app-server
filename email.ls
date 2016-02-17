@@ -14,7 +14,7 @@ send = do
   -> trans.send-mail it
 
 # TODO: Un-hardcode
-to-url = (email, hash) -> "https://datashop.amar.io/verify?email=#{encodeURIComponent email}&hash=#hash"
+to-url = (email, hash) -> "https://datashop.amar.io/user/verify?email=#{encodeURIComponent email}&hash=#hash"
 
 # TODO: Implement string format
 
