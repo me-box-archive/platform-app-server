@@ -15,15 +15,18 @@ handlers =
     # TODO: Only let verified users post
     # TODO: Consider marking all apps hidden to public by default (or warning)
 
+    # TODO: Validate manifest!
+    manifest = JSON.parse data?.manifest
+
     entry =
-      data
+      manifest: manifest
       poster:
         id:       session.user._id
         username: session.user.username
-      upload-date: new Date!
+      post-date: new Date!
       queries: 0
 
-    unless entry.data?
+    unless entry.manifest?
       callback error: 21
       return
 
