@@ -8,9 +8,12 @@ handlers =
 
   # TODO: Limit info length and further validate input
   post-app: (session, data, callback) !->
-    unless session.id?
+    unless session.user?
       callback error: 22
       return
+
+    # TODO: Only let verified users post
+    # TODO: Consider marking all apps hidden to public by default (or warning)
 
     entry =
       data
