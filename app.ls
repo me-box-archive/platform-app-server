@@ -7,7 +7,7 @@ handlers =
   #########################################################################
 
   # TODO: Limit info length and further validate input
-  post-app: (session, data, callback) !->
+  post: (session, data, callback) !->
     unless session.user?
       callback error: 22
       return
@@ -17,11 +17,11 @@ handlers =
 
     entry =
       data
-      uploader:
+      poster:
         id:       session.user._id
         username: session.user.username
       upload-date: new Date!
-      downloads: 0
+      queries: 0
 
     unless entry.data?
       callback error: 21
@@ -35,7 +35,7 @@ handlers =
 
   #########################################################################
 
-  get-all-apps: (session, data, callback) !->
+  list: (session, data, callback) !->
     err, docs <-! apps.find!.sort $natural: 1 .to-array!
     if err then throw err
 
