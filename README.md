@@ -25,6 +25,7 @@ Posts app metadata (requires login)
 
 #### Parameters:
   - manifest (An app manifest.json string)
+
 #### Response:
   - error:
     - 22 (Poster not logged in)
@@ -58,6 +59,7 @@ Registers a user; adds info to DB and marks as unverified until email confirmed.
   - username
   - email
   - password
+
 #### Response:
   - error:
     - 11 (One or more empty fields)
@@ -73,6 +75,7 @@ Logs a user in (session cookie).
 #### Parameters:
   - username or email
   - password
+
 #### Response:
   - error:
     - 14 (Email or username incorrect) - may be combined with 15 in future
@@ -94,6 +97,7 @@ Translates database user ID to username.
 
 #### Parameters:
   - _id
+
 #### Response:
   - error:
     - 31 (Missing profile)
@@ -117,6 +121,7 @@ NB: Will 302 redirect to root domain if parameters are missing instead of respon
 #### Parameters:
   - email
   - hash
+
 #### Response:
   - error: (temporary)
     - 18 (Invalid email verification link)
