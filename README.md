@@ -24,7 +24,7 @@ Warning: This is very much a work in progress and subject to backwards-incompati
 Posts app metadata (requires login)
 
 #### Parameters:
-  - manifest (An app manifest.json string)
+  - manifest (An app manifest.json string - see /app/list for specs)
 
 #### Response:
   - error:
@@ -38,7 +38,19 @@ Posts app metadata (requires login)
 List all app metadata. Each app metadata object consists of:
 
   - manifest: (Parsed app manifest)
-    - ...
+    - manifest-version: [Number]
+    - name: [String] \(one unique word)
+    - version: [String] \([semver](http://semver.org/))
+    - description: [String] \(single line description)
+    - author: [[Person](https://docs.npmjs.com/files/package.json#people-fields-author-contributors)]
+    - license: [[License](https://docs.npmjs.com/files/package.json#license)]
+    - tags: [Array of strings]
+    - homepage: [String]
+    - repository: [[Repository](https://docs.npmjs.com/files/package.json#repository)]
+    - requirements: [Array of Strings] \(A list of data sources the app requires access to (lower bound))
+    - optional-requirements: [Array of Strings] \(A list of data sources the app requires access to (upper bound))
+    - (resource-requirements: [Object] \(Hardware resources the app requires (lower bound)))
+    - TBC
   - poster:
     - id: [Databse user ID]
     - username: [username]
