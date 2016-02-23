@@ -1,5 +1,5 @@
 # Databox App Server
-A Databox Docker registry front-end
+A Databox Docker registry front-end, an instance of which is running at http://datashop.amar.io/.
 
 ## Installation
 	git clone https://github.com/yousefamar/databox-app-server.git
