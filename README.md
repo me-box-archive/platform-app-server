@@ -90,6 +90,7 @@ Logs a user in (session cookie).
 
 #### Response:
   - error:
+    - 11 (One or more empty fields)
     - 14 (Email or username incorrect) - may be combined with 15 in future
     - 15 (Password incorrect) - may be combined with 14 in future
   - success: true
