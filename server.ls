@@ -18,9 +18,16 @@ app.use session do
   save-uninitialized: false
   secret: \datashop
 
-#app.use express.static 'static'
-
 app.use body-parser.urlencoded extended: false
+
+#app.use express.static 'static'
+app.set \views \views
+app.set 'view engine' \jade
+
+app.get \/ (req, res) !->
+  unless session.user?
+    res.render \login
+    return
 
 handle = (req, res, data) !->
   api  = req.params.api
