@@ -7,6 +7,8 @@ A Databox Docker registry front-end, an instance of which is running at http://d
 	npm install --production
 
 ## Usage
+Add API keys to `config-template.json` and save it as `config.json`. Then run server with:
+
 	npm start
 
 Default port is 8080, but can be overridden using the PORT environment variable, i.e.:
