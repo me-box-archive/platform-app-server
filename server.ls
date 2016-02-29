@@ -36,7 +36,7 @@ app.get \/ (req, res) !->
     res.render \login
     return
 
-  res.end 'Logged in'
+  res.render \dashboard { user: req.session.user }
 
 handle = (req, res, data) !->
   api  = req.params.api

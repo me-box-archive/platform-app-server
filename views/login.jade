@@ -24,13 +24,13 @@ html
 				| 
 				button.btn.btn-default(type='button', data-toggle='modal', data-target='#register-modal') Register
 
-		#register-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='app-ui-label')
+		#register-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='register-modal-label')
 			.modal-dialog(role='document')
 				.modal-content
 					.modal-header
 						button.close(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') ×
-						h4#app-ui-title.modal-title Register
+						h4#register-modal-title.modal-title Register
 					.modal-body
 						.form-group
 							input.form-control#user-reg-input(type='text', placeholder='Username')
@@ -40,8 +40,8 @@ html
 							input.form-control#pass-reg-input(type='password', placeholder='Password')
 						.form-group
 							.g-recaptcha(data-sitekey='6LchkBkTAAAAAAwEYuHZBvZbywEeCP1eb_xRbqJZ')
-						button.btn.btn-primary#register-button(type='button', data-loading-text='Registering...') Register
 					.modal-footer
+						button.btn.btn-primary#register-button(type='button', data-loading-text='Registering...') Register
 
 	script
 		:livescript
