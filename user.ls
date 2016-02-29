@@ -149,7 +149,7 @@ handlers =
     err <-! users.update { _id: docs[0]._id } { $unset: { unverified: '', rand-hash: '' } }
     if err then throw err
 
-    callback success: true
+    callback redirect: \/
 
   #########################################################################
 

@@ -134,6 +134,8 @@ Destroys session
 
 Verifies a user's email address (GET recommended; link sent in verification email).
 
+NB: Will 302 redirect to root domain on successful verification.
+
 NB: Will 302 redirect to root domain if parameters are missing instead of responding with an error.
 
 #### Parameters:
@@ -143,4 +145,3 @@ NB: Will 302 redirect to root domain if parameters are missing instead of respon
 #### Response:
   - error: (temporary)
     - 18 (Invalid email verification link)
-  - success: true

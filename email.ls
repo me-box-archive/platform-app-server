@@ -4,7 +4,8 @@ require! {
   './data/email/forgot.json': forgot-template
 }
 
-const sender = 'no-reply@datashop.amar.io'
+const sender = '"The Databox Team" <no-reply@datashop.amar.io>'
+
 
 verify-template.html .= split \$$$$
 forgot-template.html .= split \$$$$
@@ -14,7 +15,7 @@ send = do
   -> trans.send-mail it
 
 # TODO: Un-hardcode
-to-url = (email, hash) -> "https://datashop.amar.io/user/verify?email=#{encodeURIComponent email}&hash=#hash"
+to-url = (email, hash) -> "http://datashop.amar.io/user/verify?email=#{encodeURIComponent email}&hash=#hash"
 
 # TODO: Implement string format
 
