@@ -1,4 +1,4 @@
-require! { crypto, './db.ls', './email.ls' }
+require! { crypto, request, './db.ls', './email.ls', './config.json' }
 
 gen-hex = (bytes, callback) !->
   ex, buf <-! crypto.random-bytes bytes
@@ -27,7 +27,7 @@ handlers =
 
   # TODO: Check email format, name length, and password complexity
   register: (session, data, callback) !->
-    if not data.username or not data.password
+    unless data.username? and data.password?
       callback error: 11
       return
 
@@ -43,6 +43,31 @@ handlers =
 
     if docs.length > 0
       callback error: 13
+      return
+
+    # Verify reCAPTCHA
+    unless data.recaptcha?
+      # No reCAPTCHA
+      callback error: 16
+      return
+
+    error, response, body <-! request.post do
+      url: \https://www.google.com/recaptcha/api/siteverify
+      form:
+        secret:   config.recaptcha.private-key
+        response: data.recaptcha
+        remoteip: data.ip
+
+    body = JSON.parse body
+
+    unless body.success
+      # reCAPTCHA error
+      callback error: 17
+      return
+
+    unless not error? and response.status-code is 200
+      # Could't verify
+      callback error: 17
       return
 
     password <-! encrypt data.password, null

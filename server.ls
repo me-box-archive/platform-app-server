@@ -1,6 +1,13 @@
 #!/usr/bin/env lsc
 
-require! { express, 'express-session': session, 'body-parser', './user.ls', './app.ls' }
+require! {
+  express
+  'express-session': session
+  'body-parser'
+  './user.ls'
+  './app.ls'
+  './config.json'
+}
 
 handlers = {}
 
@@ -43,6 +50,7 @@ handle = (req, res, data) !->
     res.end!
     return
 
+  data.ip = req.ip
   out = {} <-! handlers[api][call] req.session, data
 
   if out.redirect?
@@ -54,9 +62,9 @@ handle = (req, res, data) !->
     \Content-Type : \application/json
   res.end JSON.stringify out
 
-app.get  '/:api/:call' (req, res) !-> handle req, res, req.query
+app.get  \/:api/:call (req, res) !-> handle req, res, req.query
 
-app.post '/:api/:call' (req, res) !-> handle req, res, req.body
+app.post \/:api/:call (req, res) !-> handle req, res, req.body
 
 app.post '/400' (req, res) !->
   res.write-head 400

@@ -10,15 +10,38 @@ html
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css', integrity='sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r', crossorigin='anonymous')
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
 		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
+		script(src='https://www.google.com/recaptcha/api.js')
 
 	body
-		div.container(style='margin-top: 10%;')
+		.container(style='margin-top: 10%;')
 			h1 Databox Store Dev Login
-			div.form-group
+			.form-group
 				input.form-control#user-input(type='text', placeholder='Username/email')
-			div.form-group
+			.form-group
 				input.form-control#pass-input(type='password', placeholder='Password')
-			button.btn.btn-default#log-in-button(data-loading-text='Logging In...') Log In
+			p
+				button.btn.btn-primary#log-in-button(type='button', data-loading-text='Logging In...') Log In
+				| 
+				button.btn.btn-default(type='button', data-toggle='modal', data-target='#register-modal') Register
+
+		#register-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='app-ui-label')
+			.modal-dialog(role='document')
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') ×
+						h4#app-ui-title.modal-title Register
+					.modal-body
+						.form-group
+							input.form-control#user-reg-input(type='text', placeholder='Username')
+						.form-group
+							input.form-control#email-reg-input(type='email', placeholder='Email')
+						.form-group
+							input.form-control#pass-reg-input(type='password', placeholder='Password')
+						.form-group
+							.g-recaptcha(data-sitekey='6LchkBkTAAAAAAwEYuHZBvZbywEeCP1eb_xRbqJZ')
+						button.btn.btn-primary#register-button(type='button', data-loading-text='Registering...') Register
+					.modal-footer
 
 	script
 		:livescript
@@ -28,4 +51,33 @@ html
 				password = $ \#pass-input .val!
 				res <-! $.post \/user/login { username, password }
 				console.log res
+				btn.button \reset
+
+			$ \#register-button .click !->
+				btn = $ this .button \loading
+				username  = $ \#user-reg-input  .val!
+				email     = $ \#email-reg-input .val!
+				password  = $ \#pass-reg-input  .val!
+				recaptcha = $ \#g-recaptcha-response .val!
+				res <-! $.post \/user/register { username, email, password, recaptcha }
+
+				if res.success
+					alert 'Registration successful. Please verify your email address to log in.'
+					btn.button \reset
+					$ \#register-modal .modal \hide
+					return
+
+				unless res.error?
+					# Should never happen
+					alert 'Something went wrong; please refresh and try again.'
+					btn.button \reset
+					return
+
+				switch res.error
+				| 11 => alert 'Please fill in all fields'
+				| 12 => alert 'Sorry, a user with that email address already exists'
+				| 13 => alert 'Sorry, that username is already taken'
+				| 16 => alert 'Please complete the reCAPTCHA'
+				| 17 => alert 'ReCAPTCHA error, please try again'
+
 				btn.button \reset

@@ -73,12 +73,15 @@ Registers a user; adds info to DB and marks as unverified until email confirmed.
   - username
   - email
   - password
+  - recaptcha (Value of `g-recaptcha-response`)
 
 #### Response:
   - error:
     - 11 (One or more empty fields)
     - 12 (Email taken)
     - 13 (Username taken)
+    - 16 (No reCAPTCHA)
+    - 17 (Bad reCAPTCHA)
     - TBC
   - success: true
 
