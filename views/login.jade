@@ -50,7 +50,22 @@ html
 				username = $ \#user-input .val!
 				password = $ \#pass-input .val!
 				res <-! $.post \/user/login { username, password }
-				console.log res
+
+				if res.error?
+					switch res.error
+					| 11 => alert 'Please fill in all fields'
+					| 14 => alert 'Email/username incorrect'
+					| 15 => alert 'Password incorrect'
+					btn.button \reset
+					return
+
+				if res.success
+					btn.button \reset
+					location.reload!
+					return
+
+				# Should never happen
+				alert 'Something went wrong; please refresh and try again.'
 				btn.button \reset
 
 			$ \#register-button .click !->
@@ -61,23 +76,22 @@ html
 				recaptcha = $ \#g-recaptcha-response .val!
 				res <-! $.post \/user/register { username, email, password, recaptcha }
 
+				if res.error?
+					switch res.error
+					| 11 => alert 'Please fill in all fields'
+					| 12 => alert 'Sorry, a user with that email address already exists'
+					| 13 => alert 'Sorry, that username is already taken'
+					| 16 => alert 'Please complete the reCAPTCHA'
+					| 17 => alert 'ReCAPTCHA error, please try again'
+					btn.button \reset
+					return
+
 				if res.success
 					alert 'Registration successful. Please verify your email address to log in.'
 					btn.button \reset
 					$ \#register-modal .modal \hide
 					return
 
-				unless res.error?
-					# Should never happen
-					alert 'Something went wrong; please refresh and try again.'
-					btn.button \reset
-					return
-
-				switch res.error
-				| 11 => alert 'Please fill in all fields'
-				| 12 => alert 'Sorry, a user with that email address already exists'
-				| 13 => alert 'Sorry, that username is already taken'
-				| 16 => alert 'Please complete the reCAPTCHA'
-				| 17 => alert 'ReCAPTCHA error, please try again'
-
+				# Should never happen
+				alert 'Something went wrong; please refresh and try again.'
 				btn.button \reset

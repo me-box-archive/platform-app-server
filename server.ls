@@ -32,9 +32,11 @@ app.set \views \views
 app.set 'view engine' \jade
 
 app.get \/ (req, res) !->
-  unless session.user?
+  unless req.session.user?
     res.render \login
     return
+
+  res.end 'Logged in'
 
 handle = (req, res, data) !->
   api  = req.params.api
