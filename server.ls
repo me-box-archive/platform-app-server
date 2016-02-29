@@ -56,7 +56,7 @@ handle = (req, res, data) !->
   out = {} <-! handlers[api][call] req.session, data
 
   if out.redirect?
-    res.write-head 302 \Location: res.redirect
+    res.write-head 302 \Location: out.redirect
     res.end!
     return
   res.write-head 200,
