@@ -46,4 +46,16 @@ handlers =
 
   #########################################################################
 
+  get: (session, data, callback) !->
+    err, doc <-! apps.find-one 'manifest.name': data.name
+    if err then throw err
+
+    unless doc?
+      callback error: 23
+      return
+
+    callback doc
+
+  #########################################################################
+
 export get-handlers = (callback) !-> if apps? then callback handlers else db.collection \apps !-> apps := it; callback handlers

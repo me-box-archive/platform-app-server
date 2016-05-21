@@ -11,6 +11,7 @@ html
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
 		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
 
+
 	body
 		.container
 			h1 Databox Store Dev Dashboard
@@ -27,10 +28,43 @@ html
 							h4#upload-modal-title.modal-title Upload
 						.modal-body
 							.form-group
-								label(for="file-input") App zip
+								label(for="file-input") App Manifest JSON File
 								input#file-input(type="file")
-								p.help-block Lorem ipsum dolor sit amet, consectetur adipiscing elit
+								p.help-block Note: It can take a few working days before your app is reviewed and marked secure.
 						.modal-footer
 							button.btn.btn-primary#upload-button(type='button', data-loading-text='Uploading...') Upload
 
 			button.btn.btn-default(type='button', data-toggle='modal', data-target='#upload-modal') Upload App
+
+		script
+			:livescript
+				$ \#upload-button .click !->
+					btn = $ this .button \loading
+					file-input = document.get-element-by-id \file-input
+
+					unless file-input.value
+						btn.button \reset
+						alert 'Please select a manifest file to upload'
+						return
+
+					new FileReader!
+						..onload = (event) !->
+							manifest = JSON.parse event.target.result
+							# TODO: Client-side validation too
+							manifest = JSON.stringify manifest
+
+							res <-! $.post \/app/post { manifest }
+							if res.error?
+								switch res.error
+								| 22 => alert 'Please log in again'; location.reload!
+								| 21 => alert 'Please check manifest file for missing or illegal and upload again'
+								btn.button \reset
+								return
+
+							if res.success
+								alert 'App manifest successfully uploaded'
+								file-input.value = null
+								btn.button \reset
+								$ \#upload-modal .modal \hide
+
+						..read-as-text file-input.files[0]

@@ -35,6 +35,20 @@ Posts app metadata (requires login)
     - TBC
   - success: true
 
+### /app/get
+
+Gets app metadata (does not require login)
+
+#### Parameters:
+  - name (Name of the app to query)
+
+#### Response:
+  - error:
+    - 23 (App not found)
+    - TBC
+  - App metadata DB entry (see /app/list)
+
+
 ### /app/list
 
 List all app metadata. Each app metadata object consists of:
