@@ -31,7 +31,8 @@ handlers =
       return
 
     # TODO: Copy needed values from data; this is dangerous
-    err <-! apps.insert entry
+    # TODO: Check that version is further on upsert and validate
+    err <-! apps.update 'manifest.name': manifest.name, entry, upsert: true
     if err then throw err
 
     callback success: true
