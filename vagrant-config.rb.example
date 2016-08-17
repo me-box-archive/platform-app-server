@@ -1,0 +1,6 @@
+module DevEnv
+  # Configure a static IP for the Vagrant machine
+  IP = "192.168.101.10"
+  # Configure a port for the app server to run on
+  PORT = "8080"
+end

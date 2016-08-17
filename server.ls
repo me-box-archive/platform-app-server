@@ -33,7 +33,7 @@ app.set 'view engine' \jade
 
 app.get \/ (req, res) !->
   unless req.session.user?
-    res.render \login
+    res.render \login { config: config }
     return
 
   res.render \dashboard { user: req.session.user }
