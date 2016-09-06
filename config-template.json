@@ -2,5 +2,12 @@
 	"recaptcha": {
 		"publicKey": "",
 		"privateKey": ""
+	},
+	"mongodb": {
+		"host": "",
+		"port": "",
+		"user": "",
+		"pass": "",
+		"db": ""
 	}
 }

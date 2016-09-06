@@ -34,3 +34,11 @@ node_modules
 
 # Config file
 config.json
+
+# Eclipse project file
+.project
+
+# Vagrant configuration and runtime files
+vagrant-config.rb
+.vagrant-ppshorizon1423
+
