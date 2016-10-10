@@ -49,7 +49,7 @@ html
 				btn = $ this .button \loading
 				username = $ \#user-input .val!
 				password = $ \#pass-input .val!
-				res <-! $.post \/user/login { username, password }
+				res <-! $.post \user/login { username, password }
 
 				if res.error?
 					switch res.error
@@ -74,7 +74,7 @@ html
 				email     = $ \#email-reg-input .val!
 				password  = $ \#pass-reg-input  .val!
 				recaptcha = $ \#g-recaptcha-response .val!
-				res <-! $.post \/user/register { username, email, password, recaptcha }
+				res <-! $.post \user/register { username, email, password, recaptcha }
 
 				if res.error?
 					switch res.error
