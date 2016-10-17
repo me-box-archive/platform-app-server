@@ -53,7 +53,7 @@ html
 							# TODO: Client-side validation too
 							manifest = JSON.stringify manifest
 
-							res <-! $.post \/app/post { manifest }
+							res <-! $.post \app/post { manifest }
 							if res.error?
 								switch res.error
 								| 22 => alert 'Please log in again'; location.reload!
