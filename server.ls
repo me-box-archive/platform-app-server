@@ -9,10 +9,7 @@ require! {
   './config.json'
 }
 
-handlers = {}
-
-handlers.user <-! user.get-handlers
-handlers.app  <-! app.get-handlers
+handlers = { user, app }
 
 app = express!
 

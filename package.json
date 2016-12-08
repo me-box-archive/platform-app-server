@@ -41,7 +41,7 @@
     "jade": "^1.11.0",
     "jstransformer-livescript": "^1.1.1",
     "livescript": "^1.4.0",
-    "mongodb": "^2.1.7",
+    "nedb": "^1.8.0",
     "nodemailer": "^2.1.0",
     "request": "^2.69.0"
   }
