@@ -8,7 +8,7 @@
   "scripts": {
     "start": "lsc server.ls",
     "build": "docker build -t databox/databox-app-server .",
-    "deploy": "docker tag databox/databox-app-server $npm_package_config_registry/databox-app-server && docker push $npm_package_config_registry/databox-app-server"
+    "deploy": "docker tag databox/databox-app-server $npm_package_config_registry/databox-app-server:latest && docker push $npm_package_config_registry/databox-app-server:latest"
   },
   "repository": {
     "type": "git",
