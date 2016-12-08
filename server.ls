@@ -9,10 +9,7 @@ require! {
   './config.json'
 }
 
-handlers = {}
-
-handlers.user <-! user.get-handlers
-handlers.app  <-! app.get-handlers
+handlers = { user, app }
 
 app = express!
 
@@ -33,8 +30,12 @@ app.set 'view engine' \jade
 
 app.get \/ (req, res) !->
   unless req.session.user?
-    res.render \login { config: config }
-    return
+    unless process.env.LOCAL_MODE?
+      res.render \login { config: config }
+      return
+    req.session.user =
+      _id: -1
+      username: \localuser
 
   res.render \dashboard { user: req.session.user }
 

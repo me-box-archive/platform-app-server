@@ -16,7 +16,10 @@ html
 		.container
 			h1 Databox Store Dev Dashboard
 
-			p Logged in as #{user.username}.
+			if user._id < 0
+				p Running in local mode.
+			else
+				p Logged in as #{user.username}.
 			p No apps currently needing reviewing.
 
 			#upload-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='upload-modal-label')
