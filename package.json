@@ -2,8 +2,13 @@
   "name": "databox-app-server",
   "version": "0.1.0",
   "description": "A Databox Docker registry front-end",
+  "config": {
+    "registry": "registry.iotdatabox.com"
+  },
   "scripts": {
-    "start": "lsc server.ls"
+    "start": "lsc server.ls",
+    "build": "docker build -t databox/databox-app-server .",
+    "deploy": "docker tag databox/databox-app-server $npm_package_config_registry/databox-app-server && docker push $npm_package_config_registry/databox-app-server"
   },
   "repository": {
     "type": "git",
