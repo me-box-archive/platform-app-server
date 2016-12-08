@@ -38,7 +38,7 @@ export post = (session, data, callback) !->
 #########################################################################
 
 export list = (session, data, callback) !->
-  err, docs <-! apps.find!.sort $natural: 1
+  err, docs <-! apps.find {}
   if err then throw err
 
   callback apps: docs
