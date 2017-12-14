@@ -4,10 +4,18 @@ require! {
   express
   'express-session': session
   'body-parser'
+  'fs'
+  'https'
   './user.ls'
   './app.ls'
   './config.json'
 }
+
+credentials = false;
+if fs.existsSync "/run/secrets/DATABOX.pem"
+  credentials = {}
+  credentials.key =  fs.readFileSync "/run/secrets/DATABOX.pem"
+  credentials.cert = fs.readFileSync "/run/secrets/DATABOX.pem"
 
 handlers = { user, app }
 
@@ -72,4 +80,12 @@ app.post '/400' (req, res) !->
   res.write-head 400
   res.end!
 
-app.listen (process.env.PORT or 8080)
+done = (tmp) !->
+  console.log "listening on" + process.env.PORT + " https !!"
+
+if credentials === false
+  app.listen (process.env.PORT or 8080)
+else
+  console.log credentials
+  server = https.createServer credentials, app
+  server.listen process.env.PORT, done
